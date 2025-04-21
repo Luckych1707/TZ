@@ -3,10 +3,10 @@ import { ListDataType } from "@/shared/type/ListDataType";
 import { Flex, Input, Typography } from "antd";
 
 type Props = {
-  setTasks: (value: ListDataType) => void;
+  onUploadTask: (value: ListDataType) => void;
 };
 
-const JsonUploader = ({ setTasks }: Props) => {
+export const JsonUploader = ({ onUploadTask }: Props) => {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
 
@@ -19,7 +19,7 @@ const JsonUploader = ({ setTasks }: Props) => {
     reader.onload = (e) => {
       try {
         const parsedData = JSON.parse(e.target.result as string);
-        setTasks(parsedData);
+        onUploadTask(parsedData);
       } catch (err) {
         console.error(err);
       }
@@ -40,5 +40,3 @@ const JsonUploader = ({ setTasks }: Props) => {
     </Flex>
   );
 };
-
-export default JsonUploader;

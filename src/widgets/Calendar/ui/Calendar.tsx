@@ -8,45 +8,39 @@ import taskList from "@/shared/mock/DATE.json";
 import { CalendarHeader, CalendarItem } from "@/entities/Calendar";
 
 export const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState<Dayjs | null>(null);
-
+  const [calendarItemDate, setCalendarItemDate] = useState<Dayjs | null>(null);
+  const [calendarDate, setCalendarDate] = useState<Dayjs | null>(null);
   const [tasks, setTasks] = useState(taskList);
-
-  const showDrawer = (date: Dayjs) => {
-    setCurrentDate(date);
-  };
-
-  const onClose = () => {
-    setCurrentDate(null);
-  };
 
   return (
     <>
       <CalendarAnt
-        cellRender={(current) =>
-          CalendarItem(
-            getCalendarData({ currentDay: current, taskList: tasks }),
-          )
-        }
+        value={calendarDate ?? undefined}
+        onChange={(date) => setCalendarDate(date)}
+        cellRender={(current) => (
+          <CalendarItem
+            listData={getCalendarData({ currentDay: current, taskList: tasks })}
+            onClick={() => setCalendarItemDate(current)}
+          />
+        )}
         headerRender={(config) => (
           <CalendarHeader
             value={config.value}
             onChange={config.onChange}
-            setTasks={(value) => setTasks(() => [...tasks, ...value])}
+            onUploadTask={(value) => setTasks(() => [...tasks, ...value])}
           />
         )}
-        onSelect={(date) => showDrawer(date)}
       />
 
-      {currentDate && (
+      {calendarItemDate && (
         <Drawer
           listData={getCalendarData({
-            currentDay: currentDate,
+            currentDay: calendarItemDate,
             taskList: tasks,
           })}
-          onClose={onClose}
-          currentDate={currentDate}
-          setTasks={(value) => setTasks(() => [...tasks, ...value])}
+          onClose={() => setCalendarItemDate(null)}
+          calendarItemDate={calendarItemDate}
+          onAddTask={(value) => setTasks(() => [...tasks, ...value])}
         />
       )}
     </>

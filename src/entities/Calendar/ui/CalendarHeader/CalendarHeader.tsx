@@ -1,12 +1,13 @@
 import React from "react";
 import { Col, Flex, Row, Select } from "antd";
-import JsonUploader from "@/shared/helpers/utils/JsonUploader";
+
 import { CalendarHeaderProps } from "@/entities/Calendar/model/types";
+import { JsonUploader } from "@/shared/ui";
 
 export const CalendarHeader = ({
   value,
   onChange,
-  setTasks,
+  onUploadTask,
 }: CalendarHeaderProps) => {
   const start = 0;
   const end = 12;
@@ -72,7 +73,7 @@ export const CalendarHeader = ({
         </Row>
       </div>
 
-      <JsonUploader setTasks={setTasks} />
+      <JsonUploader onUploadTask={onUploadTask} />
     </Flex>
   );
 };

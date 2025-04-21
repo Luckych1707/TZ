@@ -4,5 +4,5 @@ import { ListDataType } from "@/shared/type/ListDataType";
 export type CalendarHeaderProps = {
   value: Dayjs;
   onChange: (data: Dayjs) => void;
-  setTasks: (value: ListDataType) => void;
+  onUploadTask: (value: ListDataType) => void;
 };
